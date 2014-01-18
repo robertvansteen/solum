@@ -8,6 +8,6 @@
 		"symfony/dependency-injection": "2.4.*"
 	},
 	"autoload": {
-		"psr-0": { "Solum": "src/", "Calendar": "src/" }
+		"psr-0": { "Solum": "src/", "App": "app/" }
 	}
 }
