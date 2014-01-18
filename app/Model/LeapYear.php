@@ -1,4 +1,4 @@
-<?php namespace Calendar\Model;
+<?php namespace App\Model;
 
 Class LeapYear 
 {
