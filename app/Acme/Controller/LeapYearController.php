@@ -1,8 +1,8 @@
-<?php namespace App\Controller;
+<?php namespace Acme\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Calendar\Model\LeapYear;
+use Acme\Model\LeapYear;
 
 Class LeapYearController 
 {

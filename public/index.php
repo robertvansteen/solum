@@ -9,5 +9,6 @@ $sc = include __DIR__.'/../src/container.php';
 
 $request = Request::createFromGlobals();
 
+$controller = new Acme\Controller\LeapYearController;
 $response = $sc->get('framework')->handle($request);
 $response->send();

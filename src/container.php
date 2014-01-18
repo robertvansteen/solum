@@ -19,9 +19,9 @@ $sc->register('listener.response', 'Symfony\Component\HttpKernel\EventListener\R
 	->setArguments(array('UTF-8'));
 
 $sc->register('listener.exception', 'Symfony\Component\HttpKernel\EventListener\ExceptionListener')
-	->setArguments(array('Calendar\\Controller\\ErrorController::exceptionAction'));
+	->setArguments(array('App\\Controller\\ErrorController::exceptionAction'));
 
-$sc->register('listener.string_response', 'Solum\StringResponseListener');
+$sc->register('listener.string_response', 'Solum\\StringResponseListener');
 
 $sc->register('dispatcher', 'Symfony\Component\EventDispatcher\EventDispatcher')
 	->addMethodCall('addSubscriber', array(new Reference('listener.router')))
