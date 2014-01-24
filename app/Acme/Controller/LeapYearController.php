@@ -6,7 +6,7 @@ use Acme\Model\LeapYear;
 
 Class LeapYearController 
 {
-	public function indexAction(Request $request, $year)
+	public function indexAction(Request $request, $year = null)
 	{
 		$leapyear = new LeapYear();
 		if($leapyear->isLeapYear($year)) {
