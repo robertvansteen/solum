@@ -34,7 +34,7 @@ class Application extends Container {
 		$this->register('listener.exception', '\Symfony\Component\HttpKernel\EventListener\ExceptionListener')
 			->setArguments(array('App\\Controller\\ErrorController::exceptionAction'));
 
-		$this->register('listener.string_response', 'Solum\\StringResponseListener');
+		$this->register('listener.string_response', 'Solum\Events\StringResponseListener');
 
 		$this->register('dispatcher', '\Symfony\Component\EventDispatcher\EventDispatcher')
 			->addMethodCall('addSubscriber', array(new Reference('listener.router')))
