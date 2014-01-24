@@ -1,4 +1,4 @@
-<?php namespace Solum;
+<?php namespace Solum\Events;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;

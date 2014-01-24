@@ -1,20 +1,21 @@
 <?php namespace Solum;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder as SymfonyContainer;
-use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Solum\Facades\Facade;
+use Solum\Container\Container;
+use Symfony\Component\DependencyInjection\Reference;
 
-Class Application Extends SymfonyContainer {	
-
-	protected $aliases;
+class Application extends Container {	
 
 	public function __construct($routes) {
 		parent::__construct();
 
+		$this->registerBaseBindings();
+		$this->registerProviders();
 		$this->registerFacadeApplication();
 
 		$this->aliases = array(
+			'App' => 'Solum\Facades\App'
 		);
 
 		$this->register('context', '\Symfony\Component\Routing\RequestContext');
@@ -50,6 +51,27 @@ Class Application Extends SymfonyContainer {
 	}
 
 	/**
+	* Register the base bindings of the application
+	*
+	* @return void
+	*/
+	protected function registerBaseBindings()
+	{
+		$this->register('Solum\Container\Container', $this);
+	}	
+
+	/**
+	* Register the providers in the IoC container
+	*
+	* @param type $name
+	* @return void
+	*/
+	protected function registerProviders()
+	{
+		$this->register('router', 'Solum\Routing');
+	}
+
+	/**
 	* Register the facade application
 	*
 	* @param type $name
@@ -65,14 +87,15 @@ Class Application Extends SymfonyContainer {
 	*
 	* @return void
 	*/
-	public function registerCoreContainerAliases()
+	protected function registerCoreContainerAliases()
 	{
 		$aliases = array(
+			'router' 		=> 'Solum\Routing'
 		);
 
 		foreach($aliases as $key => $alias)
 		{
-			$this->register($key, $alias);	
+			$this->setAlias($key, $alias);	
 		}
 	}
 
@@ -87,5 +110,10 @@ Class Application Extends SymfonyContainer {
 		{
 			return class_alias($this->aliases[$alias], $alias);
 		}
+	}
+
+	public function bar()
+	{
+		return "Foo!";
 	}
 }
