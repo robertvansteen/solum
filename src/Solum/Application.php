@@ -16,7 +16,8 @@ class Application extends Container {
 
 		$this->aliases = array(
 			'App' => 'Solum\Facades\App',
-			'View' => 'Solum\Facades\View'
+			'View' => 'Solum\Facades\View',
+			'Db' => 'Solum\Facades\Database'
 		);
 
 		$this->register('context', '\Symfony\Component\Routing\RequestContext');
@@ -71,6 +72,7 @@ class Application extends Container {
 	{
 		$this->register('router', 'Solum\Routing\Router');
 		$this->register('view', 'Solum\View\View');
+		$this->register('database', 'Solum\Database\Database');
 	}
 
 	/**
