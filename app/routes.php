@@ -10,7 +10,7 @@ $routes->add('leap_year', new Routing\Route('/is_leap_year/{year}', array(
 	'year' => null,
 	'_controller' => 'Acme\\Controller\\LeapYearController::indexAction',
 )));
-$routes->add('test', new Routing\Route('test', array('_controller' => function() { 
+$routes->add('test', new Routing\Route('test', array('_controller' => function() {	return View::make('index.php'); 
 })));
 
 return $routes;

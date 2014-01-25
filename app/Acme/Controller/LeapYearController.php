@@ -10,10 +10,10 @@ Class LeapYearController
 	{
 		$leapyear = new LeapYear();
 		if($leapyear->isLeapYear($year)) {
-			return "Yep, this is a leap year!";
+			return View::make('index.php');
 		}
 
-		return "Nope, this is not a leap year!";
+		return View::make('index.php');
 	}
 		
 }

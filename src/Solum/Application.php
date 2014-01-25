@@ -15,7 +15,8 @@ class Application extends Container {
 		$this->registerFacadeApplication();
 
 		$this->aliases = array(
-			'App' => 'Solum\Facades\App'
+			'App' => 'Solum\Facades\App',
+			'View' => 'Solum\Facades\View'
 		);
 
 		$this->register('context', '\Symfony\Component\Routing\RequestContext');
@@ -68,7 +69,8 @@ class Application extends Container {
 	*/
 	protected function registerProviders()
 	{
-		$this->register('router', 'Solum\Routing');
+		$this->register('router', 'Solum\Routing\Router');
+		$this->register('view', 'Solum\View\View');
 	}
 
 	/**
@@ -90,7 +92,7 @@ class Application extends Container {
 	protected function registerCoreContainerAliases()
 	{
 		$aliases = array(
-			'router' 		=> 'Solum\Routing'
+			'router' 		=> 'Solum\Routing',
 		);
 
 		foreach($aliases as $key => $alias)
