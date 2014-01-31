@@ -1,22 +1,24 @@
 <?php namespace Solum\Database;
 
-use Doctrine\DBAL as Doctrine;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
-class Database 
+class Database extends Capsule
 {
-	protected $config;
 
-	public function __construct()
+	/**
+	 * Solum uses Laravel's awesome Illuminate database component so
+	 * all we need to is extend it and boot it.
+	 *
+	 * @return void
+	 */
+	public function boot()
 	{
-		$this->config = new Doctrine\Configuration();
-		$this->parameters = require_once("../app/Acme/config/database.php"); 
-		$this->connection = Doctrine\DriverManager::getConnection($this->parameters, $this->config);
+		parent::__construct();
+		$config = require_once("../app/Acme/config/database.php"); 
+		$this->addConnection($config);
+		$this->bootEloquent();
 	}
 
-	public function query($query)
-	{
-		return $this->connection->query($query);
-	}
 
 }
 
