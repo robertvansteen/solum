@@ -50,6 +50,8 @@ class Application extends Container {
 		spl_autoload_register(array($this, 'load'));
 
 		$this->registerCoreContainerAliases();
+
+		$this->get('database')->boot();
 	}
 
 	/**
