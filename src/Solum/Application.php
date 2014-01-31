@@ -7,6 +7,8 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class Application extends Container {	
 
+	protected $aliases;
+
 	public function __construct($routes) {
 		parent::__construct();
 
@@ -14,6 +16,8 @@ class Application extends Container {
 		$this->registerProviders();
 		$this->registerFacadeApplication();
 
+		// Below here needs to be cleaned up
+		
 		$this->aliases = array(
 			'App' => 'Solum\Facades\App',
 			'View' => 'Solum\Facades\View',
@@ -105,11 +109,22 @@ class Application extends Container {
 		}
 	}
 
+	/**
+	 * Run the application and send the reponse to the appropriate response class
+	 *
+	 * @return void
+	 */
 	public function run($request) {
 		$response = $this->get('kernel')->handle($request);
 		$response->send();
 	}
 
+	/**
+	 * When a class can't be found, this method is called via the autoload_register.
+	 * If the class is in the alias array we return it.
+	 *
+	 * @return mixed
+	 */
 	public function load($alias)
 	{
 		if(isset($this->aliases[$alias]))
@@ -118,8 +133,6 @@ class Application extends Container {
 		}
 	}
 
-	public function bar()
-	{
-		return "Foo!";
-	}
+
+
 }
