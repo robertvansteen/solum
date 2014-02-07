@@ -42,11 +42,14 @@ class Application extends Container {
 
 		$this->register('listener.string_response', 'Solum\Events\StringResponseListener');
 
+		$this->register('listener.controller', 'Solum\Events\ControllerListener');
+
 		$this->register('dispatcher', '\Symfony\Component\EventDispatcher\EventDispatcher')
 			->addMethodCall('addSubscriber', array(new Reference('listener.router')))
 			->addMethodCall('addSubscriber', array(new Reference('listener.response')))
 			->addMethodCall('addSubscriber', array(new Reference('listener.exception')))
-			->addMethodCall('addSubscriber', array(new Reference('listener.string_response')));
+			->addMethodCall('addSubscriber', array(new Reference('listener.string_response')))
+			->addMethodCall('addSubscriber', array(new Reference('listener.controller')));
 
 		$this->register('kernel', '\Symfony\Component\HttpKernel\HttpKernel')
 			->setArguments(array(new Reference('dispatcher'), new Reference('resolver')));
