@@ -11,10 +11,5 @@ class Container extends SymfonyContainer
 	*/
 	protected $aliases;		
 
-	public function foo()
-	{
-		return "Bar";
-	}
-
 }
 

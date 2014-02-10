@@ -9,12 +9,11 @@ class View
 
 	protected $twig;
 		
-	public function __construct() 
+	public function __construct(\Symfony\Component\Routing\Generator\UrlGenerator $generator) 
 	{
-		$this->loader = new TwigFilesystem('../app/Acme/Views/');
-		$this->twig = new TwigEnvironment($this->loader, array(
-			'cache' => '../app/Acme/Views/.cache'
-		));
+		$this->loader = new TwigFilesystem('../app/views/');
+		$this->twig = new TwigEnvironment($this->loader);
+		$this->twig->addGlobal('url', $generator);
 	}
 
 	public function make($filename, $args = null)

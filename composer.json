@@ -11,8 +11,11 @@
 	},
 	"autoload": {
 		"psr-0": { 
-			"Solum": "src/", 
-			"Acme" : "app/"
-		}
+			"Solum": "src/"
+		},
+		"classmap": [
+			"app/controllers",
+			"app/models"
+		]
 	}
 }

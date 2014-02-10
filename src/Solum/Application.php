@@ -4,12 +4,15 @@ use Symfony\Component\HttpKernel\HttpKernel;
 use Solum\Facades\Facade;
 use Solum\Container\Container;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\HttpFoundation\Request;
 
 class Application extends Container {	
 
 	protected $aliases;
 
-	public function __construct($routes) {
+	protected $request;
+
+	public function __construct() {
 		parent::__construct();
 
 		$this->registerBaseBindings();
@@ -21,13 +24,31 @@ class Application extends Container {
 		$this->aliases = array(
 			'App' => 'Solum\Facades\App',
 			'View' => 'Solum\Facades\View',
-			'Db' => 'Solum\Facades\Database'
+			'Db' => 'Solum\Facades\Database',
+			'Route' => 'Solum\Facades\Router',
+			'Input' => 'Solum\Facades\Input',
+			'Url' => 'Solum\Facades\Url',
+			'Redirect' => 'Solum\Facades\Redirect'
 		);
+
+		$this->register('request', '\Symfony\Component\HttpFoundation\Request')
+			->setArguments(array($_GET, $_POST, array(), $_COOKIE, $_FILES, $_SERVER));
+		$this->get('request')->enableHttpMethodParameterOverride();
+
+		$this->register('input', 'Solum\Http\Input')
+			->setArguments(array(new Reference('request')));
+
+		$this->register('routes', '\Symfony\Component\Routing\RouteCollection');
 
 		$this->register('context', '\Symfony\Component\Routing\RequestContext');
 
+		$this->get('context')->fromRequest($this->get('request'));
+
 		$this->register('matcher', '\Symfony\Component\Routing\Matcher\UrlMatcher')
-			->setArguments(array($routes, new Reference('context')));
+			->setArguments(array(new Reference('routes'), new Reference('context')));
+
+		$this->register('generator', '\Symfony\Component\Routing\Generator\UrlGenerator')
+			->setArguments(array(new Reference('routes'), new Reference('context')));
 
 		$this->register('resolver', '\Symfony\Component\HttpKernel\Controller\ControllerResolver');
 
@@ -79,9 +100,12 @@ class Application extends Container {
 	*/
 	protected function registerProviders()
 	{
-		$this->register('router', 'Solum\Routing\Router');
-		$this->register('view', 'Solum\View\View');
+		$this->register('router', 'Solum\Routing\Router')
+			->setArguments(array(new Reference('routes')));
+		$this->register('view', 'Solum\View\View')
+			->setArguments(array(new Reference('generator')));
 		$this->register('database', 'Solum\Database\Database');
+		$this->register('redirect', 'Solum\Http\Redirect');
 	}
 
 	/**
@@ -103,7 +127,7 @@ class Application extends Container {
 	protected function registerCoreContainerAliases()
 	{
 		$aliases = array(
-			'router' 		=> 'Solum\Routing',
+			'route' 		=> 'Solum\Routing',
 		);
 
 		foreach($aliases as $key => $alias)
@@ -117,7 +141,8 @@ class Application extends Container {
 	 *
 	 * @return void
 	 */
-	public function run($request) {
+	public function run($request = null) {
+		$request = $request ?: $this->get('request');
 		$response = $this->get('kernel')->handle($request);
 		$response->send();
 	}

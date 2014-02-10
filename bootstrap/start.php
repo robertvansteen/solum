@@ -1,6 +1,8 @@
 <?php
 
-$routes = require_once __DIR__.'/../app/routes.php';
-$app = new Solum\Application($routes);
+require_once __DIR__.'/../app/config/app.php';
+
+$app = new Solum\Application;
+require_once __DIR__.'/../app/routes.php';
 
 return $app;

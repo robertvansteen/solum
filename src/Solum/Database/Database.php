@@ -14,7 +14,7 @@ class Database extends Capsule
 	public function boot()
 	{
 		parent::__construct();
-		$config = require_once("../app/Acme/config/database.php"); 
+		$config = require_once("../app/config/database.php"); 
 		$this->addConnection($config);
 		$this->bootEloquent();
 	}

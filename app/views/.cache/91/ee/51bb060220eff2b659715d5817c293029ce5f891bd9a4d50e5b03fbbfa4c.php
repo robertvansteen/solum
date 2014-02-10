@@ -1,7 +1,7 @@
 <?php
 
 /* index.php */
-class __TwigTemplate_2fff8a533bbde944c9bd188a875a4f557fa388184c7c88ab303ca5daf4663245 extends Twig_Template
+class __TwigTemplate_91ee51bb060220eff2b659715d5817c293029ce5f891bd9a4d50e5b03fbbfa4c extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
@@ -15,9 +15,6 @@ class __TwigTemplate_2fff8a533bbde944c9bd188a875a4f557fa388184c7c88ab303ca5daf46
 
     protected function doDisplay(array $context, array $blocks = array())
     {
-        // line 1
-        echo "Yep, it's a leap year!
-";
     }
 
     public function getTemplateName()
@@ -27,6 +24,6 @@ class __TwigTemplate_2fff8a533bbde944c9bd188a875a4f557fa388184c7c88ab303ca5daf46
 
     public function getDebugInfo()
     {
-        return array (  19 => 1,);
+        return array ();
     }
 }
