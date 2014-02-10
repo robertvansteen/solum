@@ -16,6 +16,15 @@ class View
 		$this->twig->addGlobal('url', $generator);
 	}
 
+	/**
+	 * Render a file with the twig template engine
+	 *
+	 * @param string $filename
+	 * @param array $args
+	 *
+	 * @return mixed
+	 */
+
 	public function make($filename, $args = null)
 	{
 		if($args)

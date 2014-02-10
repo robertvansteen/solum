@@ -9,6 +9,12 @@ class Input {
 		$this->request = $request;
 	}
 
+	/**
+	 * Return all $_POST values
+	 *
+	 * @return array
+	 */
+
 	public function allPost()
 	{
 		return $this->request->request->all();

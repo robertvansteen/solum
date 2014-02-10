@@ -19,8 +19,6 @@ class Application extends Container {
 		$this->registerProviders();
 		$this->registerFacadeApplication();
 
-		// Below here needs to be cleaned up
-		
 		$this->aliases = array(
 			'App' => 'Solum\Facades\App',
 			'View' => 'Solum\Facades\View',
@@ -58,9 +56,6 @@ class Application extends Container {
 		$this->register('listener.response', '\Symfony\Component\HttpKernel\EventListener\ResponseListener')
 			->setArguments(array('UTF-8'));
 
-		$this->register('listener.exception', '\Symfony\Component\HttpKernel\EventListener\ExceptionListener')
-			->setArguments(array('App\\Controller\\ErrorController::exceptionAction'));
-
 		$this->register('listener.string_response', 'Solum\Events\StringResponseListener');
 
 		$this->register('listener.controller', 'Solum\Events\ControllerListener');
@@ -68,7 +63,6 @@ class Application extends Container {
 		$this->register('dispatcher', '\Symfony\Component\EventDispatcher\EventDispatcher')
 			->addMethodCall('addSubscriber', array(new Reference('listener.router')))
 			->addMethodCall('addSubscriber', array(new Reference('listener.response')))
-			->addMethodCall('addSubscriber', array(new Reference('listener.exception')))
 			->addMethodCall('addSubscriber', array(new Reference('listener.string_response')))
 			->addMethodCall('addSubscriber', array(new Reference('listener.controller')));
 
