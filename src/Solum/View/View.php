@@ -9,11 +9,18 @@ class View
 
 	protected $twig;
 		
-	public function __construct(\Symfony\Component\Routing\Generator\UrlGenerator $generator) 
+	public function __construct(\Symfony\Component\Routing\Generator\UrlGenerator $generator, \Symfony\Component\HttpFoundation\Session\Session $session) 
 	{
 		$this->loader = new TwigFilesystem('../app/views/');
-		$this->twig = new TwigEnvironment($this->loader);
+		$this->twig = new TwigEnvironment($this->loader, array('debug' => true));
+		$this->twig->addExtension(new \Twig_Extension_Debug());
 		$this->twig->addGlobal('url', $generator);
+		$messages = $session->getFlashBag()->get('message');
+		$warnings = $session->getFlashBag()->get('warning');
+		$username = $session->get('username');
+		$this->twig->addGlobal('messages', $messages);
+		$this->twig->addGlobal('warnings', $warnings);
+		$this->twig->addGlobal('username', $username);
 	}
 
 	/**

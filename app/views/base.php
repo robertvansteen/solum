@@ -12,7 +12,19 @@
 	<div class="container">
 		<ul class="nav nav-pills">
 			<li><a href="{{ url.generate('task.index') }}">Home</a></li>	
+			{% if username is null %}
+				<li><a href="{{ url.generate('login.get') }}">Login</a></li>
+			{% else %}
+				<li><a href="{{ url.generate('task.create') }}">New task</a></li>
+				<li><a href="{{ url.generate('logout') }}">Logout</a></li>
+			{% endif %}
 		</ul>
+		{% for message in messages %}
+			<div class="alert alert-info">{{ message }}</div>
+		{% endfor %}
+		{% for warning in warnings %}
+			<div class="alert alert-danger">{{ warning }}</div>
+		{% endfor %}
 		{% block content %}{% endblock %} 	
 	</div>
 </body>

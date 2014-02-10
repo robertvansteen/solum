@@ -26,8 +26,13 @@ class Application extends Container {
 			'Route' => 'Solum\Facades\Router',
 			'Input' => 'Solum\Facades\Input',
 			'Url' => 'Solum\Facades\Url',
-			'Redirect' => 'Solum\Facades\Redirect'
+			'Redirect' => 'Solum\Facades\Redirect',
+			'Session' => 'Solum\Facades\Session',
+			'Guard' => 'Solum\Facades\Guard'
 		);
+
+		$this->register('session', '\Symfony\Component\HttpFoundation\Session\Session');
+		$this->get('session')->start();
 
 		$this->register('request', '\Symfony\Component\HttpFoundation\Request')
 			->setArguments(array($_GET, $_POST, array(), $_COOKIE, $_FILES, $_SERVER));
@@ -97,9 +102,11 @@ class Application extends Container {
 		$this->register('router', 'Solum\Routing\Router')
 			->setArguments(array(new Reference('routes')));
 		$this->register('view', 'Solum\View\View')
-			->setArguments(array(new Reference('generator')));
+			->setArguments(array(new Reference('generator'), new Reference('session')));
 		$this->register('database', 'Solum\Database\Database');
 		$this->register('redirect', 'Solum\Http\Redirect');
+		$this->register('guard', 'Solum\Http\Guard')
+			->setArguments(array(new Reference('generator'), new Reference('session'), new Reference('redirect')));
 	}
 
 	/**
